@@ -1,18 +1,23 @@
 import streamlit as st
-from gpt import Gpt
-from prompt import prompt_marv_qa
+from gpt import GPT
+from prompt import prompt_legal_statement
 
-st.header("GPT-3 application")
+st.header("GPT-3 legal summariser")
 
 api_key = st.text_input("OpenAI API Key:", type="password")
 
-st.header("Your personal sarcastic bot - Marv")
+st.header("Simpler Terms of Service")
 
-question_for_marv = st.text_input("Question for Marv:")
+statement = st.text_input("Legal statement:")
 
-gpt = Gpt(api_key)
+gpt = GPT(api_key)
 
-if st.button("Answer"):
-    st.write(gpt.gpt_3(0.8, prompt_marv_qa(question_for_marv)))
+if st.button("Summarise"):
+    complete_prompt = prompt_legal_statement(statement)
+    print(complete_prompt)
+    response = gpt.gpt_3(0.8, complete_prompt, 1250)
+
+    st.write(response)
+
 
 
